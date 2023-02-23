@@ -255,11 +255,11 @@ export const getRequestIdRedirectUrl =async (params:Params<string>) => {
 };
 
 
-export const createRequestDoc =async (requestDoc: RequestDoc) => {
+export const writeRequestDoc =async (requestDoc: RequestDoc) => {
   const requestDocRef = db.requests().doc();
 
   const writeToDB = requestDocRef.create(requestDoc);
 
-  return { ...writeToDB, requestId: requestDocRef.id}
+  return { requestId: requestDocRef.id}
   
 }

@@ -1,11 +1,11 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { getTestFormById } from "~/server/route-logic/test-requests";
+import { getTestFormByParams } from "~/server/route-logic/test-requests";
 
 
 export async function loader({ params }: LoaderArgs) {
-  const formDoc = await getTestFormById(params);
+  const formDoc = await getTestFormByParams(params);
   if (!formDoc) {
     throw new Response("No form by that Id found", { status: 404 })
   }
