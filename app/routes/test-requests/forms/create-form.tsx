@@ -1,4 +1,5 @@
-import { LoaderArgs, ActionArgs, redirect} from "@remix-run/node";
+import type { LoaderArgs, ActionArgs} from "@remix-run/node";
+import { redirect} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import type { Field } from "~/server/route-logic/requests/types";
@@ -12,7 +13,7 @@ export async function action({params, request}:ActionArgs) {
     if(!checkDataShape.success){
     return checkDataShape.error;
   }else{
-    const formDoc = { ...checkDataShape.data, questionOrder:[], questionsObj: {}}
+    const formDoc = { ...checkDataShape.data, questionOrder:[]}
     const formWrite = await writeFormToDb(formDoc);
     return redirect(`/test-requests/forms/${formWrite.formId}`)
   }

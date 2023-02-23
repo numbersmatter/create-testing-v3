@@ -30,6 +30,6 @@ export const FieldArrayTypes =
     formName: string;
     formText: string;
     questionOrder: string[];
-    questionsObj: { [questionId:string]: FormQuestion};
+  
   }
   

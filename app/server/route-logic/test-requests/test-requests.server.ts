@@ -1,10 +1,9 @@
-import { redirect } from "@remix-run/node";
 import type { Params } from "@remix-run/react";
-import { FieldValue, QueryDocumentSnapshot } from "firebase-admin/firestore";
-import { getFirestore } from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 import { z } from "zod";
 import { db } from "~/server/db.server";
-import { FieldArrayTypes, FieldDoc, FormDoc, FormQuestion } from "./types";
+import type { FieldDoc, FormDoc, FormQuestion } from "./types";
+import { FieldArrayTypes } from "./types";
 
 
 // Level 3
@@ -99,7 +98,7 @@ export const getTestFormById = async (params: Params<string>)  =>{
 }
 
 export const safeParseAddFormQuestion =async (params:Params<string>, request: Request) => {
-  const formId = params.formId ?? "no-formId";
+  // const formId = params.formId ?? "no-formId";
   const formValues = Object.fromEntries(await request.formData())
 
   const QuestionSchema = z.object({
@@ -149,7 +148,7 @@ export const writeQuestionIdToForm = (formId: string, questionId:string) => {
 
 
 export const checkFieldAddFormSchema = async (params: Params, request:Request)=>{
-  const questionId= params.questionId ?? "no questionId"
+  // const questionId= params.questionId ?? "no questionId"
   const formValues = Object.fromEntries(await request.formData())
 
   const FieldSchema = z.object({
@@ -238,3 +237,19 @@ export const deleteOptionByValue = async ( formId: string, questionId:string, fi
     options: newOptions
   })
 };
+
+
+export const hydrateQuestion = async(formId: string, questionId: string)=> {
+  const questionRef = db.testFormQuestions(formId).doc(questionId);
+  const questionFieldsRef = db.questionFields(formId, questionId);
+
+  const questionSnap = await questionRef.get();
+  const fieldsSnap = await questionFieldsRef.get();
+
+
+  //  need to turn this into 
+  //  request expectation of  a question
+
+
+}
+

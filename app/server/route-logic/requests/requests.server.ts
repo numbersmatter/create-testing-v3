@@ -253,3 +253,13 @@ export const getRequestIdRedirectUrl =async (params:Params<string>) => {
 
   return nextQuestionUrl;
 };
+
+
+export const createRequestDoc =async (requestDoc: RequestDoc) => {
+  const requestDocRef = db.requests().doc();
+
+  const writeToDB = requestDocRef.create(requestDoc);
+
+  return { ...writeToDB, requestId: requestDocRef.id}
+  
+}
